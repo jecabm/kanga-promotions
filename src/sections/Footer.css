@@ -1,0 +1,84 @@
+.footer {
+  background: var(--ink);
+  color: var(--paper);
+  padding-top: var(--section-y);
+  padding-bottom: var(--s-6);
+}
+.footer a {
+  text-decoration: none;
+}
+.footer a:hover {
+  color: var(--gold);
+}
+
+.footer__cta {
+  display: grid;
+  gap: var(--s-6);
+  justify-items: start;
+  padding-bottom: clamp(3rem, 7vw, 6rem);
+  border-bottom: 1px solid #3d3931;
+}
+.footer__cta-title {
+  font-size: clamp(2.1rem, 5vw, 4.6rem);
+  max-width: 14ch;
+  text-wrap: balance;
+}
+
+.footer__grid {
+  display: grid;
+  gap: var(--s-7) var(--s-6);
+  padding-block: clamp(3rem, 6vw, 4.5rem);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.footer__brand {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: var(--s-4);
+  align-content: start;
+  justify-items: start;
+  max-width: 36ch;
+}
+@media (min-width: 900px) {
+  .footer__grid {
+    grid-template-columns: 2fr 1fr 1.3fr 1.3fr;
+  }
+  .footer__brand {
+    grid-column: auto;
+  }
+}
+.footer__parent a {
+  color: var(--paper);
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+  text-underline-offset: 3px;
+  /* keep "Visit Kanga Lifting" together so it wraps as one unit */
+  white-space: nowrap;
+}
+.footer__heading {
+  margin-bottom: var(--s-4);
+  font-family: var(--font-display);
+  font-size: var(--fs-eyebrow);
+  font-weight: 650;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.footer ul {
+  display: grid;
+  gap: var(--s-2);
+  font-size: 0.95rem;
+}
+.footer__contact {
+  color: #d6cfc0;
+}
+
+.footer__base {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding-top: var(--s-5);
+  border-top: 1px solid #3d3931;
+  font-size: 0.8rem;
+  color: #a9a291;
+}

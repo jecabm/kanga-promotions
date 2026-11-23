@@ -1,0 +1,74 @@
+/*
+ * Kanga Promotions design tokens
+ * See docs/DESIGN-SYSTEM.md for rationale and usage rules.
+ */
+:root {
+  /* ---- Brand colour (the WEBSITE, not the products) ---- */
+  --ink: #15130f;          /* Primary: warm near-black, text + dark sections */
+  --ink-2: #2b2823;        /* Raised dark surfaces */
+  --ink-3: #5a554c;        /* Secondary text on paper (AA on paper) */
+  --paper: #ffffff;        /* Page background: white */
+  --paper-2: #ebe4d6;      /* Recessed paper / borders */
+  --paper-3: #d9d0bd;      /* Hairlines on paper */
+  --white: #fffdf8;
+  --gold: #f8ad00;         /* Accent: Kanga Gold (inherited from parent brand) */
+  --gold-deep: #d99400;    /* Gold hover / pressed */
+  --eucalypt: #2e5a4c;     /* Support: success + quiet emphasis */
+  --error: #b3261e;
+
+  /* ---- Product showcase backdrops (photography sets, NOT brand colours) ---- */
+  --set-terracotta: #d9693f;
+  --set-sky: #a9cbdc;
+  --set-sage: #b9c6a5;
+  --set-blush: #eec6b7;
+  --set-sand: #e8d5ab;
+  --set-cobalt: #2f4fa8;
+  --set-mint: #cfe4d7;
+  --set-graphite: #3b3a38;
+  --set-lilac: #cdc2e2;
+  --set-butter: #f3e4a2;
+
+  /* ---- Typography ---- */
+  --font-display: 'Archivo Variable', 'Arial Narrow', system-ui, sans-serif;
+  --font-body: 'Instrument Sans Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --fs-display: clamp(3.1rem, 8.4vw, 8.25rem);
+  --fs-h2: clamp(1.9rem, 4.25vw, 3.9rem);
+  --fs-h3: clamp(1.35rem, 1.9vw, 1.75rem);
+  --fs-lead: clamp(1.125rem, 1.4vw, 1.3rem);
+  --fs-body: 1.0625rem;
+  --fs-small: 0.875rem;
+  --fs-eyebrow: 0.75rem;
+
+  /* ---- Spacing (4px base) ---- */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+  --s-10: 8rem;
+  --section-y: clamp(4.5rem, 10vw, 9rem);
+
+  /* ---- Layout ---- */
+  --max-w: 1360px;
+  --gutter: clamp(1rem, 3.2vw, 2.5rem);
+  --grid-gap: clamp(0.75rem, 1.6vw, 1.5rem);
+
+  /* ---- Shape & motion ---- */
+  --radius-s: 2px;
+  --radius-m: 4px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 160ms;
+  --dur-med: 420ms;
+  --focus-ring: 0 0 0 3px var(--paper), 0 0 0 5px var(--ink);
+  --header-h: 88px;
+}
+
+/* Breakpoints (for reference, used in media queries):
+   sm  640px  large phones
+   md  900px  tablets
+   lg  1200px desktop */

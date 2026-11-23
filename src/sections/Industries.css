@@ -1,0 +1,52 @@
+.industries__head {
+  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+}
+.industries__grid {
+  display: grid;
+  gap: clamp(2rem, 3vw, 1.5rem) var(--grid-gap);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.industry {
+  display: grid;
+  gap: var(--s-2);
+  align-content: start;
+}
+.industry__media {
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius-m);
+  overflow: hidden;
+  margin-bottom: var(--s-3);
+}
+/* Stagger alternate tiles for an editorial rhythm on desktop */
+@media (min-width: 1000px) {
+  .industry:nth-child(even) {
+    margin-top: var(--s-8);
+  }
+}
+.industry__ideas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-top: var(--s-2);
+}
+.industry__ideas li {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.25rem 0.55rem;
+  border: 1px solid var(--paper-3);
+  border-radius: var(--radius-s);
+}
+
+@media (max-width: 999px) {
+  .industries__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 559px) {
+  .industries__grid {
+    grid-template-columns: 1fr;
+  }
+  .industry__media {
+    aspect-ratio: 4 / 3;
+  }
+}

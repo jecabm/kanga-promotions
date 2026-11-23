@@ -1,0 +1,23 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+}
+
+/* Crop the web-address line from the bottom of the artwork (top 362px of 450px kept) */
+.logo__img {
+  display: block;
+  height: 56px;
+  width: auto;
+  aspect-ratio: 935 / 362;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* Dark backgrounds use the reversed artwork (white wordmark), no plate needed */
+
+@media (max-width: 479px) {
+  .logo__img {
+    height: 42px;
+  }
+}

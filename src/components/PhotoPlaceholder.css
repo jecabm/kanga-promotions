@@ -1,0 +1,38 @@
+.photo-ph {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--s-4);
+  height: 100%;
+  padding: var(--s-4);
+  color: #fff;
+  overflow: hidden;
+  isolation: isolate;
+}
+.photo-ph::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0 1px, transparent 1px 14px),
+    linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.35));
+}
+.photo-ph__badge {
+  align-self: flex-start;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: var(--radius-s);
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.photo-ph__brief {
+  font-size: 0.85rem;
+  line-height: 1.45;
+  opacity: 0.9;
+  max-width: 30ch;
+}

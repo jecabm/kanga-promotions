@@ -1,0 +1,56 @@
+.quote {
+  background: var(--paper-2);
+}
+.quote__grid {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4rem);
+}
+@media (min-width: 1000px) {
+  .quote__grid {
+    grid-template-columns: 5fr 7fr;
+    align-items: start;
+  }
+  .quote__intro {
+    position: sticky;
+    top: calc(var(--header-h) + 2rem);
+  }
+}
+.quote__intro {
+  display: grid;
+  gap: var(--s-5);
+}
+.quote__points {
+  display: grid;
+  gap: var(--s-3);
+}
+.quote__points li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-3);
+  font-weight: 500;
+}
+.quote__points li::before {
+  content: '';
+  flex: none;
+  width: 0.6rem;
+  height: 0.6rem;
+  background: var(--gold);
+  transform: translateY(-1px) skewX(-12deg);
+}
+.quote__contact {
+  display: grid;
+  gap: var(--s-1);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--paper-3);
+  font-weight: 600;
+}
+.quote__contact .eyebrow {
+  margin-bottom: var(--s-2);
+  color: var(--ink-3);
+}
+.quote__card {
+  background: var(--paper);
+  padding: clamp(1.25rem, 4vw, 3rem);
+  border-radius: var(--radius-m);
+  box-shadow: 0 1px 0 var(--paper-3), 0 30px 60px -40px rgba(21, 19, 15, 0.35);
+}

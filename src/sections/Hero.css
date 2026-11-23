@@ -1,0 +1,134 @@
+.hero {
+  background: #e8e4da; /* matches the merch.jpg studio backdrop (its lighter centre tone) */
+  padding-top: clamp(2rem, 5vw, 4.5rem);
+  overflow: hidden;
+}
+.hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(2.5rem, 5vw, 4rem);
+  align-items: center;
+}
+@media (min-width: 1000px) {
+  .hero__grid {
+    grid-template-columns: 0.9fr 1.1fr;
+  }
+}
+.hero__eyebrow {
+  margin-bottom: var(--s-5);
+}
+.hero__title {
+  /* sized so "EVERYTHING." always fits the column on small phones */
+  font-size: clamp(1.65rem, 6.8vw, 3.75rem);
+  display: grid;
+  margin-bottom: var(--s-6);
+}
+@media (min-width: 1000px) {
+  .hero__title {
+    font-size: clamp(2.4rem, 4.25vw, 4.6rem);
+  }
+}
+.hero__line {
+  display: block;
+}
+.hero__mark {
+  background: var(--gold);
+  color: var(--ink);
+  padding: 0 0.08em;
+  margin-left: -0.04em;
+  display: inline-block;
+  transform: skewX(-6deg);
+}
+.hero__text {
+  display: grid;
+  gap: var(--s-3);
+  max-width: 34rem;
+  margin-bottom: var(--s-6);
+}
+.hero__text .muted {
+  max-width: 46ch;
+}
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+@media (max-width: 479px) {
+  .hero__actions .btn {
+    flex: 1 1 100%;
+  }
+}
+
+/* Photo */
+.hero__photo {
+  margin: 0;
+}
+.hero__photo img {
+  /* larger than its column: bleeds past the container edges (hero clips overflow) */
+  width: 120%;
+  max-width: none;
+  height: auto;
+  margin-inline: -10%;
+  pointer-events: none; /* transparent faded edges must not block the buttons */
+  /* fade every edge fully to transparent so no box edge shows against the matching
+     background; wider fade on the left where the photo has a darker vignette */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 10%, #000 94%, transparent),
+    linear-gradient(to bottom, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 10%, #000 94%, transparent),
+    linear-gradient(to bottom, transparent, #000 6%, #000 94%, transparent);
+  mask-composite: intersect;
+}
+@media (min-width: 1000px) {
+  .hero__photo img {
+    width: 150%;
+    margin-inline: -5% -45%;
+  }
+}
+
+/* Ticker */
+.hero__ticker {
+  margin-top: clamp(3.5rem, 7vw, 6rem);
+  background: var(--ink);
+  color: var(--paper);
+  overflow: hidden;
+  padding-block: var(--s-4);
+}
+.hero__ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker 48s linear infinite;
+}
+.hero__ticker-group {
+  display: flex;
+  flex: none;
+}
+.hero__ticker-group > span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-5);
+  padding-right: var(--s-5);
+  font-family: var(--font-display);
+  font-variation-settings: 'wdth' 115;
+  font-weight: 800;
+  font-size: clamp(1rem, 1.6vw, 1.35rem);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.hero__ticker i {
+  font-style: normal;
+  color: var(--gold);
+}
+@keyframes ticker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero__ticker-track {
+    animation: none;
+  }
+}
