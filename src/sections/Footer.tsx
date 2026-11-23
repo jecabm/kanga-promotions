@@ -72,7 +72,6 @@ export function Footer() {
           <p>
             © {year} {site.name}. All rights reserved.
           </p>
-          <p>Brands shown in product imagery are fictional examples.</p>
         </div>
       </div>
     </footer>
