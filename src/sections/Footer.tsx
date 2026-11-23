@@ -35,7 +35,7 @@ export function Footer() {
 
           <nav aria-label="Footer">
             <p className="footer__heading">Explore</p>
-            <ul role="list" className="footer__links">
+            <ul role="list">
               {nav.map((n) => (
                 <li key={n.href}>
                   <a href={n.href}>{n.label}</a>
@@ -49,7 +49,7 @@ export function Footer() {
 
           <div>
             <p className="footer__heading">Products</p>
-            <ul role="list" className="footer__links">
+            <ul role="list">
               {products.map((p) => (
                 <li key={p.id}>
                   <a href="#products">{p.name}</a>
