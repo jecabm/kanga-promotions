@@ -1,6 +1,5 @@
 import { QuoteForm } from '../components/QuoteForm';
 import { Reveal } from '../components/Reveal';
-import { site } from '../data/content';
 import './Quote.css';
 
 export function Quote() {
@@ -21,11 +20,6 @@ export function Quote() {
             <li>Upload your logo now, or send it later</li>
             <li>Help choosing the right decoration</li>
           </ul>
-          <div className="quote__contact">
-            <p className="eyebrow">Prefer to talk?</p>
-            <p>{site.phone}</p>
-            <p>{site.email}</p>
-          </div>
         </Reveal>
 
         <div className="quote__card">
