@@ -19,9 +19,9 @@
 }
 .header--scrolled { border-bottom-color: color-mix(in srgb, var(--white) 15%, transparent); }
 
-.header .logo__img { height: 68px; }
+.header .logo__img { height: 78px; }
 @media (max-width: 479px) {
-  .header .logo__img { height: 52px; }
+  .header .logo__img { height: 60px; }
 }
 
 
