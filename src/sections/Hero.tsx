@@ -33,7 +33,7 @@ export function Hero() {
 
         <figure className="hero__photo">
           <img
-            src="/merch.jpg"
+            src="/merch.png"
             alt="Custom printed stubby coolers, pens, air fresheners and swing tags"
             width={1200}
             height={896}

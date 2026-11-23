@@ -1,5 +1,5 @@
 .hero {
-  background: #e8e4da; /* matches the merch.jpg studio backdrop (its lighter centre tone) */
+  background: #e4e0d4; /* matches the merch.png studio backdrop (its lighter edge tone) */
   padding-top: clamp(2rem, 5vw, 4.5rem);
   overflow: hidden;
 }
