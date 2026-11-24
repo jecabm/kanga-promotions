@@ -36,11 +36,11 @@
   gap: var(--s-4);
   align-content: start;
   justify-items: start;
-  max-width: 36ch;
+  max-width: 56ch;
 }
 @media (min-width: 900px) {
   .footer__grid {
-    grid-template-columns: 1.3fr 1fr 1.3fr;
+    grid-template-columns: 2.2fr 1fr 1.2fr;
     column-gap: clamp(2rem, 5vw, 5rem);
   }
   .footer__brand {
