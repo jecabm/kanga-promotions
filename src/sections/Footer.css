@@ -25,7 +25,7 @@
 }
 
 /* Brand blurb on its own row (mobile) or on the left (desktop); the two link
-   columns sit side by side, each only as wide as its content. */
+   columns follow it, left-aligned, each only as wide as its content. */
 .footer__grid {
   display: flex;
   flex-wrap: wrap;
@@ -49,10 +49,6 @@
   }
   .footer__brand {
     flex: 0 1 56ch;
-  }
-  /* push the link columns right, keeping Explore and Products together */
-  .footer__grid > nav {
-    margin-left: auto;
   }
 }
 .footer__parent a {
