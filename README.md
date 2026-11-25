@@ -33,14 +33,13 @@ To edit copy, products, FAQs or contact details, change `src/data/content.ts`.
 
 ## Quote form
 
-The form posts to **Netlify Forms** (form name `quote`, with a hidden copy in `index.html` so Netlify detects it at deploy time).
+The form sends enquiries to **[Web3Forms](https://web3forms.com)**, which emails them to the address verified on the Web3Forms account. No backend is needed.
 
-- `VITE_FORMS_ENABLED=true` is set in `netlify.toml`, so the form submits on Netlify.
-- Locally, and anywhere without that flag, the form **validates but does not pretend to send**. It shows a "not connected yet" notice instead.
-- Success is only shown after a real `2xx` response. Network or server failures show an error state.
-- File uploads are limited to 8MB (Netlify's limit) and to PDF/AI/EPS/SVG/PNG/JPG.
-
-After the first deploy, open **Netlify → Site configuration → Forms**, enable form detection, then redeploy. Set up email notifications under **Forms → Form notifications**.
+- Set `VITE_WEB3FORMS_ACCESS_KEY` in **Netlify → Site configuration → Environment variables**, then redeploy. For local testing, put it in `.env.local` (see `.env.example`).
+- Without the key, the form **validates but does not pretend to send**. It shows a "not connected yet" notice instead.
+- Success is only shown after Web3Forms confirms the submission. Network or server failures show an error state.
+- Spam protection: a hidden `botcheck` honeypot plus Web3Forms' own server-side spam filtering.
+- File attachments are a paid Web3Forms feature, so the form asks for an optional **artwork link** (Google Drive, Dropbox, WeTransfer) instead of an upload.
 
 ## Push to GitHub
 

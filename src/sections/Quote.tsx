@@ -17,7 +17,7 @@ export function Quote() {
           </p>
           <ul className="quote__points" role="list">
             <li>Quote for one product or the full range</li>
-            <li>Upload your logo now, or send it later</li>
+            <li>Share your logo now, or send it later</li>
             <li>Help choosing the right decoration</li>
           </ul>
         </Reveal>

@@ -229,7 +229,7 @@ export const faqs = [
   },
   {
     q: 'Can I provide my own artwork?',
-    a: 'Yes. You can upload your logo or artwork with your enquiry. Vector files (AI, EPS, SVG or PDF) usually give the best results, but send what you have and our team will let you know if anything else is needed.',
+    a: 'Yes. You can include a link to your logo or artwork (Google Drive, Dropbox or WeTransfer) with your enquiry, or send it once we’re in touch. Vector files (AI, EPS, SVG or PDF) usually give the best results, but send what you have and our team will let you know if anything else is needed.',
   },
   {
     q: 'Are there minimum order quantities?',

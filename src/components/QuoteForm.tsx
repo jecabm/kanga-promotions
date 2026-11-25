@@ -6,18 +6,17 @@ import './QuoteForm.css';
 
 /**
  * Quote form.
- * Posts to Netlify Forms (form name "quote"). Netlify detects the form at deploy time from the
- * static copy in public/__forms.html, so keep form name and field names in sync with that file.
- * Submission is ONLY attempted when VITE_FORMS_ENABLED === 'true', so the page never
- * claims an enquiry was sent when no backend is connected.
+ * Sends enquiries to Web3Forms (https://web3forms.com), which emails them to the address
+ * verified on the Web3Forms account that owns the access key. No backend is needed.
+ * Submission is ONLY attempted when VITE_WEB3FORMS_ACCESS_KEY is set, so the page never
+ * claims an enquiry was sent when no form service is connected.
  */
-const FORMS_ENABLED = import.meta.env.VITE_FORMS_ENABLED === 'true';
+const ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY?.trim() ?? '';
+const FORMS_ENABLED = ACCESS_KEY !== '';
+const ENDPOINT = 'https://api.web3forms.com/submit';
 
-const MAX_FILE_MB = 8;
-const ACCEPTED = ['.pdf', '.ai', '.eps', '.svg', '.png', '.jpg', '.jpeg'];
-
-type Field = 'fullName' | 'company' | 'email' | 'phone' | 'products' | 'quantity' | 'details' | 'artwork';
-type Values = Record<'fullName' | 'company' | 'email' | 'phone' | 'quantity' | 'details', string>;
+type Field = 'fullName' | 'company' | 'email' | 'phone' | 'products' | 'quantity' | 'details' | 'artworkLink';
+type Values = Record<Exclude<Field, 'products'>, string>;
 type Errors = Partial<Record<Field, string>>;
 type Status = 'idle' | 'submitting' | 'success' | 'error' | 'not-connected';
 
@@ -29,12 +28,15 @@ const LABELS: Record<Field, string> = {
   products: 'Products of interest',
   quantity: 'Estimated quantity',
   details: 'Project details',
-  artwork: 'Artwork upload',
+  artworkLink: 'Artwork link',
 };
 
-const EMPTY: Values = { fullName: '', company: '', email: '', phone: '', quantity: '', details: '' };
+const EMPTY: Values = { fullName: '', company: '', email: '', phone: '', quantity: '', details: '', artworkLink: '' };
 
-function validate(v: Values, selected: string[], file: File | null): Errors {
+// Loose check: accepts links with or without https://, e.g. drive.google.com/… or https://we.tl/…
+const LINK_RE = /^(https?:\/\/)?[^\s/.]+(\.[^\s/.]+)+(\/\S*)?$/i;
+
+function validate(v: Values, selected: string[]): Errors {
   const e: Errors = {};
   if (!v.fullName.trim()) e.fullName = 'Please enter your full name.';
   if (!v.company.trim()) e.company = 'Please enter your company name.';
@@ -47,18 +49,14 @@ function validate(v: Values, selected: string[], file: File | null): Errors {
     e.phone = 'Please enter a valid phone number, e.g. 0400 000 000.';
   if (selected.length === 0) e.products = 'Please choose at least one product.';
   if (v.details.trim().length < 10) e.details = 'Please tell us a little about your project (at least 10 characters).';
-  if (file) {
-    const ext = '.' + (file.name.split('.').pop() ?? '').toLowerCase();
-    if (!ACCEPTED.includes(ext)) e.artwork = `Please upload one of: ${ACCEPTED.join(', ')}.`;
-    else if (file.size > MAX_FILE_MB * 1024 * 1024) e.artwork = `Files must be ${MAX_FILE_MB}MB or smaller.`;
-  }
+  if (v.artworkLink.trim() && !LINK_RE.test(v.artworkLink.trim()))
+    e.artworkLink = 'Please paste a full link, e.g. https://drive.google.com/…';
   return e;
 }
 
 export function QuoteForm() {
   const { selected, setSelected } = useQuote();
   const [values, setValues] = useState<Values>(EMPTY);
-  const [file, setFile] = useState<File | null>(null);
   const [errors, setErrors] = useState<Errors>({});
   const [showSummary, setShowSummary] = useState(false);
   const [status, setStatus] = useState<Status>('idle');
@@ -67,9 +65,9 @@ export function QuoteForm() {
   const statusRef = useRef<HTMLDivElement>(null);
   const submittingRef = useRef(false);
 
-  const revalidate = (nextValues = values, nextSelected = selected, nextFile = file) => {
+  const revalidate = (nextValues = values, nextSelected = selected) => {
     // only update errors for fields that already show an error (avoids shouting while typing)
-    const all = validate(nextValues, nextSelected, nextFile);
+    const all = validate(nextValues, nextSelected);
     setErrors((prev) => {
       const next: Errors = {};
       (Object.keys(prev) as Field[]).forEach((k) => {
@@ -86,7 +84,7 @@ export function QuoteForm() {
   };
 
   const onBlur = (name: Field) => {
-    const all = validate(values, selected, file);
+    const all = validate(values, selected);
     setErrors((prev) => ({ ...prev, [name]: all[name] }));
   };
 
@@ -96,16 +94,11 @@ export function QuoteForm() {
     revalidate(values, next);
   };
 
-  const onFile = (e: ChangeEvent<HTMLInputElement>) => {
-    const f = e.target.files?.[0] ?? null;
-    setFile(f);
-    const all = validate(values, selected, f);
-    setErrors((prev) => ({ ...prev, artwork: all.artwork }));
-  };
-
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const found = validate(values, selected, file);
+    // Block double clicks / repeat Enter presses while a submission is in flight.
+    if (submittingRef.current) return;
+    const found = validate(values, selected);
     setErrors(found);
     if (Object.keys(found).length > 0) {
       setShowSummary(true);
@@ -120,19 +113,37 @@ export function QuoteForm() {
       return;
     }
 
-    // Block double clicks / repeat Enter presses while a submission is in flight.
-    if (submittingRef.current) return;
     submittingRef.current = true;
     setStatus('submitting');
     try {
-      // Multipart FormData (no Content-Type header set manually) so the artwork file is included.
-      const data = new FormData(formRef.current!);
-      data.set('form-name', 'quote');
-      data.set('products', selected.map((id) => products.find((p) => p.id === id)?.name ?? id).join(', '));
-      if (!file) data.delete('artwork');
-      // Post to the static detection file (public/__forms.html), as Netlify recommends for JS-rendered forms.
-      const res = await fetch('/__forms.html', { method: 'POST', body: data });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      // Honeypot: real visitors never see or tick this box. Bots that do get a fake success
+      // and nothing is sent. Web3Forms also checks the same field server-side.
+      const botcheck = formRef.current?.querySelector<HTMLInputElement>('input[name="botcheck"]')?.checked ?? false;
+      if (!botcheck) {
+        const productNames = selected.map((id) => products.find((p) => p.id === id)?.name ?? id);
+        const link = values.artworkLink.trim();
+        const res = await fetch(ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            access_key: ACCESS_KEY,
+            subject: `New quote request: ${values.company.trim()} (${values.fullName.trim()})`,
+            from_name: `${site.name} website`,
+            botcheck: false,
+            // "name" and "email" are Web3Forms' standard fields; "email" also becomes the reply-to address.
+            name: values.fullName.trim(),
+            email: values.email.trim(),
+            'Company name': values.company.trim(),
+            'Phone number': values.phone.trim(),
+            'Products of interest': productNames.join(', '),
+            'Estimated quantity': values.quantity.trim() || 'Not specified',
+            'Project details': values.details.trim(),
+            'Artwork link': link ? (/^https?:\/\//i.test(link) ? link : `https://${link}`) : 'Not provided',
+          }),
+        });
+        const json = (await res.json().catch(() => null)) as { success?: boolean } | null;
+        if (!res.ok || !json?.success) throw new Error(`Web3Forms error (HTTP ${res.status})`);
+      }
       setStatus('success');
     } catch {
       setStatus('error');
@@ -145,7 +156,6 @@ export function QuoteForm() {
   const reset = () => {
     setValues(EMPTY);
     setSelected([]);
-    setFile(null);
     setErrors({});
     setStatus('idle');
     formRef.current?.reset();
@@ -171,7 +181,7 @@ export function QuoteForm() {
   const describe = (name: Field, hint?: boolean) =>
     [hint ? `${name}-hint` : null, errors[name] ? `${name}-error` : null].filter(Boolean).join(' ') || undefined;
 
-  const text = (name: keyof Values, opts: { type?: string; autoComplete?: string; required?: boolean; inputMode?: 'tel' | 'email' | 'numeric'; hint?: string }) => (
+  const text = (name: keyof Values, opts: { type?: string; autoComplete?: string; required?: boolean; inputMode?: 'tel' | 'email' | 'numeric' | 'url'; hint?: string }) => (
     <div className={`qform__field${errors[name] ? ' has-error' : ''}`}>
       <label htmlFor={name}>
         {LABELS[name]}
@@ -198,7 +208,7 @@ export function QuoteForm() {
         aria-describedby={describe(name, !!opts.hint)}
         value={values[name]}
         onChange={onChange}
-        onBlur={() => opts.required && onBlur(name)}
+        onBlur={() => (opts.required || values[name].trim()) && onBlur(name)}
       />
       {errors[name] && (
         <p id={`${name}-error`} className="qform__error">
@@ -214,18 +224,14 @@ export function QuoteForm() {
       className="qform"
       name="quote"
       method="POST"
-      data-netlify="true"
-      netlify-honeypot="bot-field"
-      encType="multipart/form-data"
       noValidate
       onSubmit={onSubmit}
       aria-describedby="qform-required-note"
     >
-      <input type="hidden" name="form-name" value="quote" />
-      <input type="hidden" name="products" value={selected.join(', ')} />
+      {/* Spam honeypot (Web3Forms "botcheck"): hidden from people and screen readers. */}
       <p className="visually-hidden" aria-hidden="true">
         <label>
-          Leave this empty: <input name="bot-field" tabIndex={-1} autoComplete="off" />
+          Leave this unticked: <input type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" />
         </label>
       </p>
 
@@ -323,35 +329,12 @@ export function QuoteForm() {
         )}
       </div>
 
-      <div className={`qform__field${errors.artwork ? ' has-error' : ''}`}>
-        <label htmlFor="artwork">
-          {LABELS.artwork}
-          <span className="qform__opt"> (optional)</span>
-        </label>
-        <p id="artwork-hint" className="qform__hint">
-          Logo or artwork: PDF, AI, EPS, SVG, PNG or JPG, up to {MAX_FILE_MB}MB.
-        </p>
-        <div className="qform__file">
-          <input
-            id="artwork"
-            name="artwork"
-            type="file"
-            accept={ACCEPTED.join(',')}
-            aria-invalid={!!errors.artwork}
-            aria-describedby={describe('artwork', true)}
-            onChange={onFile}
-          />
-          <span className="qform__file-ui" aria-hidden="true">
-            <span className="qform__file-btn">Choose file</span>
-            <span className="qform__file-name">{file ? file.name : 'No file selected'}</span>
-          </span>
-        </div>
-        {errors.artwork && (
-          <p id="artwork-error" className="qform__error">
-            {errors.artwork}
-          </p>
-        )}
-      </div>
+      {text('artworkLink', {
+        type: 'url',
+        inputMode: 'url',
+        autoComplete: 'off',
+        hint: 'Share your logo or artwork via Google Drive, Dropbox or WeTransfer and paste the link here. Or send it later.',
+      })}
 
       {status === 'not-connected' && (
         <div className="qform__result qform__result--info" role="status" tabIndex={-1} ref={statusRef}>
