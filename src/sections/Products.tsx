@@ -37,7 +37,7 @@ export function Products() {
               style={{ '--span': spans[i] } as CSSProperties}
               delay={(i % 3) * 80}
             >
-              <ProductCard product={p} index={i} total={products.length} feature={spans[i] >= 7} />
+              <ProductCard product={p} feature={spans[i] >= 7} />
             </Reveal>
           ))}
         </div>

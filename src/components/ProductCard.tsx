@@ -5,12 +5,10 @@ import './ProductCard.css';
 
 interface Props {
   product: Product;
-  index: number;
-  total: number;
   feature?: boolean;
 }
 
-export function ProductCard({ product, index, total, feature }: Props) {
+export function ProductCard({ product, feature }: Props) {
   const { preselect } = useQuote();
   const { art } = product;
   const titleId = `product-${product.id}`;
@@ -18,10 +16,6 @@ export function ProductCard({ product, index, total, feature }: Props) {
   return (
     <article className={`pcard${feature ? ' pcard--feature' : ''}`} aria-labelledby={titleId}>
       <div className="pcard__media" style={{ background: product.photo ? '#e6e2d8' : art.backdrop }}>
-        <span className="pcard__index">
-          {String(index + 1).padStart(2, '0')}
-          <span aria-hidden="true">/{total}</span>
-        </span>
         <span className="pcard__tag">{product.technique}</span>
         {product.photo ? (
           <img
