@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="noindex" />
+    <title>Forms</title>
+  </head>
+  <body>
+    <!--
+      Netlify Forms detection file. Netlify can't see forms rendered by React, so this static
+      copy registers the "quote" form at deploy time. The React form (src/components/QuoteForm.tsx)
+      posts its submissions here. Form name and field names MUST match the React form exactly.
+    -->
+    <form name="quote" method="POST" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" hidden>
+      <input type="hidden" name="form-name" value="quote" />
+      <input type="text" name="bot-field" />
+      <input type="text" name="fullName" />
+      <input type="text" name="company" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="products" />
+      <input type="text" name="quantity" />
+      <textarea name="details"></textarea>
+      <input type="file" name="artwork" />
+    </form>
+  </body>
+</html>

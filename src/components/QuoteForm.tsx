@@ -6,7 +6,8 @@ import './QuoteForm.css';
 
 /**
  * Quote form.
- * Posts to Netlify Forms (form name "quote", mirrored in index.html).
+ * Posts to Netlify Forms (form name "quote"). Netlify detects the form at deploy time from the
+ * static copy in public/__forms.html, so keep form name and field names in sync with that file.
  * Submission is ONLY attempted when VITE_FORMS_ENABLED === 'true', so the page never
  * claims an enquiry was sent when no backend is connected.
  */
@@ -64,6 +65,7 @@ export function QuoteForm() {
   const formRef = useRef<HTMLFormElement>(null);
   const summaryRef = useRef<HTMLDivElement>(null);
   const statusRef = useRef<HTMLDivElement>(null);
+  const submittingRef = useRef(false);
 
   const revalidate = (nextValues = values, nextSelected = selected, nextFile = file) => {
     // only update errors for fields that already show an error (avoids shouting while typing)
@@ -118,17 +120,24 @@ export function QuoteForm() {
       return;
     }
 
+    // Block double clicks / repeat Enter presses while a submission is in flight.
+    if (submittingRef.current) return;
+    submittingRef.current = true;
     setStatus('submitting');
     try {
+      // Multipart FormData (no Content-Type header set manually) so the artwork file is included.
       const data = new FormData(formRef.current!);
       data.set('form-name', 'quote');
       data.set('products', selected.map((id) => products.find((p) => p.id === id)?.name ?? id).join(', '));
       if (!file) data.delete('artwork');
-      const res = await fetch('/', { method: 'POST', body: data });
+      // Post to the static detection file (public/__forms.html), as Netlify recommends for JS-rendered forms.
+      const res = await fetch('/__forms.html', { method: 'POST', body: data });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       setStatus('success');
     } catch {
       setStatus('error');
+    } finally {
+      submittingRef.current = false;
     }
     requestAnimationFrame(() => statusRef.current?.focus());
   };
@@ -205,6 +214,8 @@ export function QuoteForm() {
       className="qform"
       name="quote"
       method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
       encType="multipart/form-data"
       noValidate
       onSubmit={onSubmit}

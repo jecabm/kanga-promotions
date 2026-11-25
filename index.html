@@ -35,23 +35,6 @@
     />
   </head>
   <body>
-    <!--
-      Static copy of the quote form so Netlify Forms can detect it at deploy time.
-      The visible React form posts to the same form name. Keep field names in sync
-      with src/components/QuoteForm.tsx.
-    -->
-    <form name="quote" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" hidden>
-      <input type="hidden" name="form-name" value="quote" />
-      <input name="bot-field" />
-      <input name="fullName" />
-      <input name="company" />
-      <input name="email" type="email" />
-      <input name="phone" />
-      <input name="products" />
-      <input name="quantity" />
-      <textarea name="details"></textarea>
-      <input name="artwork" type="file" />
-    </form>
     <div id="root"></div>
     <noscript>
       Kanga Promotions: custom printed promotional merchandise for Australian businesses.
