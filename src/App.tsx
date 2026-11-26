@@ -1,4 +1,5 @@
 import { Header } from './components/Header';
+import { StructuredData } from './components/StructuredData';
 import { QuoteProvider } from './context/QuoteContext';
 import { Benefits } from './sections/Benefits';
 import { Faq } from './sections/Faq';
@@ -25,6 +26,7 @@ export default function App() {
         <Quote />
       </main>
       <Footer />
+      <StructuredData />
     </QuoteProvider>
   );
 }

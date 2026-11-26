@@ -1,0 +1,7 @@
+import { renderToString } from 'react-dom/server';
+import App from './App';
+
+/** Used only at build time by scripts/prerender.mjs to bake the page HTML into dist/index.html. */
+export function render() {
+  return renderToString(<App />);
+}

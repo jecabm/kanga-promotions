@@ -22,6 +22,8 @@ export function ProductCard({ product, feature }: Props) {
             className="pcard__photo"
             src={product.photo.src}
             alt={product.photo.alt}
+            width={1200}
+            height={896}
             loading="lazy"
             decoding="async"
             style={product.photo.zoom ? ({ '--photo-zoom': product.photo.zoom } as React.CSSProperties) : undefined}

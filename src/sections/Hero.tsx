@@ -7,9 +7,9 @@ export function Hero() {
     <section className="hero" aria-labelledby="hero-title">
       <div className="container hero__grid">
         <div className="hero__copy">
-          <p className="eyebrow hero__eyebrow">Custom printed promotional merchandise · Australia</p>
+          <p className="eyebrow hero__eyebrow">Custom promotional products · Australia</p>
           <h1 id="hero-title" className="display hero__title">
-            <span className="hero__line">Your brand.</span>
+            <span className="hero__line">Your brand.</span>{' '}
             <span className="hero__line">
               On <mark className="hero__mark">everything.</mark>
             </span>
@@ -33,10 +33,12 @@ export function Hero() {
 
         <figure className="hero__photo">
           <img
-            src="/merch.png"
-            alt="Custom printed stubby coolers, pens, air fresheners and swing tags"
+            src="/merch.webp"
+            alt="Branded promotional products: custom printed stubby coolers, pens, air fresheners and swing tags"
             width={1200}
             height={896}
+            decoding="async"
+            {...{ fetchpriority: 'high' }}
           />
         </figure>
       </div>

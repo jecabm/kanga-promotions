@@ -20,6 +20,8 @@ export const brands = {
 export const site = {
   name: 'Kanga Promotions',
   tagline: 'Your Brand. On Everything.',
+  /** Preferred (canonical) origin. Keep in sync with index.html, robots.txt and sitemap.xml. */
+  url: 'https://www.kangapromotions.com.au/',
   parentName: 'Kanga Lifting',
   parentUrl: 'https://www.kangalifting.com.au/',
   // TODO: replace placeholders with confirmed contact details
@@ -42,7 +44,7 @@ export const products: Product[] = [
     description: 'The Aussie classic. Bold wraparound prints that turn every cold one into a brand moment.',
     technique: 'Full-colour wrap',
     art: { kind: 'stubby', body: '#1e3a7b', accent: '#f2c14e', ink: '#fff6df', brand: brands.southernCross, pattern: 'stripes', backdrop: 'var(--set-butter)' },
-    photo: { src: '/stubby-cooler.png', alt: 'Custom printed stubby coolers with full-colour wraparound branding' },
+    photo: { src: '/stubby-cooler.webp', alt: 'Custom printed stubby coolers with full-colour wraparound branding' },
   },
   {
     id: 'air-fresheners',
@@ -50,7 +52,7 @@ export const products: Product[] = [
     description: 'Die-cut to shape and printed both sides. Your logo on the dashboard of every work ute.',
     technique: 'Die-cut, double-sided',
     art: { kind: 'freshener', body: '#c2461d', accent: '#f6c453', ink: '#fff3e2', brand: brands.redDirt, backdrop: 'var(--set-sky)' },
-    photo: { src: '/air-freshener.jpg', alt: 'Custom printed die-cut air fresheners with client logos' },
+    photo: { src: '/air-freshener.webp', alt: 'Custom printed die-cut air fresheners with client logos' },
   },
   {
     id: 'towels',
@@ -58,7 +60,7 @@ export const products: Product[] = [
     description: 'A big canvas for big artwork. Beach, gym and golf towels with large-format printing.',
     technique: 'Sublimation print',
     art: { kind: 'towel', body: '#f4efe4', accent: '#1f6f8b', ink: '#16485a', brand: brands.coastline, pattern: 'stripes', backdrop: 'var(--set-blush)' },
-    photo: { src: '/towels.png', alt: 'Custom printed towels with large-format branding' },
+    photo: { src: '/towels.webp', alt: 'Custom printed towels with large-format branding' },
   },
   {
     id: 'mugs',
@@ -66,7 +68,7 @@ export const products: Product[] = [
     description: 'A daily desk companion. Colourful illustrations, contrast handles and wraparound designs.',
     technique: 'Ceramic print',
     art: { kind: 'mug', body: '#fbf7ef', accent: '#d9693f', ink: '#3b2a20', brand: brands.saltbush, pattern: 'dots', backdrop: 'var(--set-sage)' },
-    photo: { src: '/mugs.png', alt: 'Custom printed ceramic mugs with branded designs', zoom: 1.3 },
+    photo: { src: '/mugs.webp', alt: 'Custom printed ceramic mugs with branded designs', zoom: 1.3 },
   },
   {
     id: 'drink-bottles',
@@ -74,7 +76,7 @@ export const products: Product[] = [
     description: 'Insulated and reusable, with clean minimal branding or laser-engraved logos.',
     technique: 'Laser engraved',
     art: { kind: 'bottle', body: '#e9e6df', accent: '#c9c4b8', ink: '#16324f', brand: brands.bluegum, pattern: 'split', backdrop: 'var(--set-graphite)' },
-    photo: { src: '/water-bottle.png', alt: 'Custom branded insulated drink bottles', zoom: 1.3 },
+    photo: { src: '/water-bottle.webp', alt: 'Custom branded insulated drink bottles', zoom: 1.3 },
   },
 ];
 
@@ -105,7 +107,7 @@ export const benefits = [
   },
   {
     title: 'Make connections',
-    copy: 'Give customers, employees and business partners something practical and memorable.',
+    copy: 'Corporate promotional gifts give customers, employees and business partners something practical and memorable.',
   },
   {
     title: 'Promote your business',

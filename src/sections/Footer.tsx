@@ -60,7 +60,8 @@ export function Footer() {
         </div>
 
         <div className="footer__base">
-          <p>
+          {/* year is baked in at prerender time; the client may differ after New Year */}
+          <p suppressHydrationWarning>
             © {year} {site.name}. All rights reserved.
           </p>
         </div>

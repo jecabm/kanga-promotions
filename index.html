@@ -3,14 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kanga Promotions | Custom Printed Promotional Merchandise Australia</title>
+    <title>Custom Promotional Products Australia | Kanga Promotions</title>
     <meta
       name="description"
-      content="Custom printed promotional merchandise for Australian businesses. Stubby coolers, drinkware, towels, caps, apparel and more, branded with your logo. Request a quote."
+      content="Promotional products and branded merchandise for Australian businesses. Stubby coolers, mugs, drink bottles, towels and corporate gifts, printed with your logo."
     />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="theme-color" content="#15130F" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href="https://www.kangapromotions.com.au/" />
+
+    <!-- Hero image is the LCP element: fetch it immediately, before the JS bundle -->
+    <link rel="preload" as="image" href="/merch.webp" type="image/webp" fetchpriority="high" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -18,20 +22,24 @@
     <meta property="og:title" content="Kanga Promotions | Your Brand. On Everything." />
     <meta
       property="og:description"
-      content="Custom printed promotional merchandise for Australian businesses. Put your logo on products people actually use."
+      content="Custom promotional products for Australian businesses. Put your logo on products people actually use."
     />
     <meta property="og:url" content="https://www.kangapromotions.com.au/" />
     <meta property="og:locale" content="en_AU" />
-    <!-- TODO: add a 1200x630 share image at /og-image.jpg, then uncomment:
     <meta property="og:image" content="https://www.kangapromotions.com.au/og-image.jpg" />
-    <meta name="twitter:image" content="https://www.kangapromotions.com.au/og-image.jpg" />
-    -->
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Branded stubby coolers, pens, air fresheners and swing tags" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Kanga Promotions | Your Brand. On Everything." />
     <meta
       name="twitter:description"
-      content="Custom printed promotional merchandise for Australian businesses."
+      content="Custom promotional products for Australian businesses."
     />
+    <meta name="twitter:image" content="https://www.kangapromotions.com.au/og-image.jpg" />
+
+    <!-- Without JS the scroll-reveal never fires, so show content straight away -->
+    <noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
   </head>
   <body>
     <div id="root"></div>

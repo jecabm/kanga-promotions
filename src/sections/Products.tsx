@@ -21,7 +21,7 @@ export function Products() {
                 Merchandise that makes your brand <span className="u-gold-underline">stand out.</span>
               </>
             }
-            intro="Practical promotional products, customised with your logo and designed to keep your business visible."
+            intro="Practical branded promotional products, customised with your logo and designed to keep your business visible."
           />
           <p className="products__disclaimer">
             Product images are illustrated concept mockups using fictional example brands, shown to demonstrate
